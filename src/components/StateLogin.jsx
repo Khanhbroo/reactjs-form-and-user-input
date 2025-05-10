@@ -15,7 +15,15 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(enteredValue);
+
+    if (emailIsInvalid) {
+      setDidEdit({
+        email: false,
+        password: false,
+      });
+      return;
+    }
+
     setEnteredValue({
       email: "",
       password: "",
