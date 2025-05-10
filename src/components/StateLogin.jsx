@@ -1,17 +1,28 @@
-import { useRef } from "react";
+import { useState } from "react";
 
-export default function StateLogin() {
-  const email = useRef();
-  const password = useRef();
+export default function Login() {
+  const [enteredValue, setEnteredValue] = useState({
+    email: "",
+    password: "",
+  });
+
+  const emailIsInvalid =
+    enteredValue.email !== "" && !enteredValue.email.includes("@");
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    console.log(enteredValue);
+    setEnteredValue({
+      email: "",
+      password: "",
+    });
+  };
 
-    const enteredEmail = email.current.value;
-    const enteredPassword = password.current.value;
-    console.log(enteredEmail + " " + enteredPassword);
-
-    event.target.reset();
+  const handleInputChange = (identifier, event) => {
+    setEnteredValue((prevValues) => ({
+      ...prevValues,
+      [identifier]: event.target.value,
+    }));
   };
 
   return (
@@ -21,12 +32,27 @@ export default function StateLogin() {
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
-          <input ref={email} id="email" type="email" name="email" />
+          <input
+            id="email"
+            type="email"
+            name="email"
+            onChange={(event) => handleInputChange("email", event)}
+            value={enteredValue.email}
+          />
+          <div className="control-error">
+            {emailIsInvalid && <p>Please enter a valid email address.</p>}
+          </div>
         </div>
 
         <div className="control no-margin">
           <label htmlFor="password">Password</label>
-          <input ref={password} id="password" type="password" name="password" />
+          <input
+            id="password"
+            type="password"
+            name="password"
+            onChange={(event) => handleInputChange("password", event)}
+            value={enteredValue.password}
+          />
         </div>
       </div>
 
