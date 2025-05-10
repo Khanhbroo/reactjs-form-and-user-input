@@ -10,6 +10,8 @@ export default function StateLogin() {
     const enteredEmail = email.current.value;
     const enteredPassword = password.current.value;
     console.log(enteredEmail + " " + enteredPassword);
+
+    event.target.reset();
   };
 
   return (
